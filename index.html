@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hirono's Literature Reviewer</title>
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffe66d;
+            --dark-color: #292f36;
+            --light-color: #f7fff7;
+            --hirono-pink: #ff9cce;
+            --hirono-purple: #9d65c9;
+            --hirono-blue: #5d54a4;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0e6ef;
+            color: var(--dark-color);
+            line-height: 1.6;
+            background-image: url('https://i.pinimg.com/originals/e5/2c/3a/e52c3a7de87bc8c4cf55f4e56a39ed71.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: rgba(157, 101, 201, 0.9);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.pinimg.com/originals/b5/fd/3f/b5fd3fbe984103e08b9482471921e0a0.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            color: var(--light-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        nav {
+            background-color: var(--hirono-blue);
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .nav-item:hover {
+            background-color: var(--hirono-pink);
+            transform: translateY(-3px);
+        }
+        
+        main {
+            padding: 40px 0;
+        }
+        
+        .section {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-header {
+            background-color: var(--hirono-purple);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--hirono-pink), var(--secondary-color), var(--accent-color));
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .subsection {
+            margin-bottom: 20px;
+            border-left: 4px solid var(--hirono-pink);
+            padding-left: 15px;
+        }
+        
+        .subsection h3 {
+            color: var(--hirono-blue);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .highlight {
+            background-color: var(--accent-color);
+            padding: 0 3px;
+            font-weight: 500;
+            border-radius: 3px;
+        }
+        
+        .author-card {
+            background-color: rgba(255, 156, 206, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--hirono-purple);
+        }
+        
+        .author-card h4 {
+            color: var(--hirono-blue);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .work-list {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .work-list li {
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .work-list li::before {
+            content: "♥";
+            position: absolute;
+            left: 0;
+            color: var(--hirono-pink);
+        }
+        
+        .story-box {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .story-box h4 {
+            color: var(--hirono-purple);
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .character-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .character-tag {
+            background-color: var(--hirono-pink);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .period-tag {
+            background-color: var(--hirono-blue);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        .note-box {
+            background-color: rgba(255, 230, 109, 0.2);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+        
+        .note-box h4 {
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            background-color: var(--hirono-blue);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-text {
+            margin-bottom: 15px;
+        }
+        
+        .footer-image {
+            width: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid var(--hirono-pink);
+        }
+        
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, var(--hirono-pink), var(--hirono-purple), var(--hirono-blue));
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-item {
+                padding: 8px 15px;
+                margin: 5px;
+            }
+            
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        .trivia-box {
+            background-color: rgba(93, 84, 164, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px dashed var(--hirono-purple);
+        }
+        
+        .trivia-box h4 {
+            color: var(--hirono-purple);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .key-works {
+            background-color: rgba(78, 205, 196, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .key-works h4 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Hirono's Literature Reviewer</h1>
+            <p class="subtitle">Exploring the beautiful world of literature with Hirono-chan!</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="#asia" class="nav-item">Asian Literature</a>
+            <a href="#europe" class="nav-item">European Literature</a>
+            <a href="#philippines" class="nav-item">Philippine Literature</a>
+            <a href="#artists" class="nav-item">National Artists</a>
+            <a href="#context" class="nav-item">Literary Context</a>
+            <a href="#stories" class="nav-item">Stories</a>
+        </div>
+    </nav>
+    
+    <main class="container">
+        <section id="asia" class="section">
+            <div class="section-header">
+                <h2>Exploring Asia: The Largest Continent</h2>
+            </div>
+            <div class="section-content">
+                <p>Asia is the <span class="highlight">largest continent in the world</span> by both land area and population. It covers an area of more than 44 million square kilometers, about 30% of Earth's total land area and 8% of Earth's total surface area.</p>
+                
+                <div class="subsection">
+                    <h3>East Asia</h3>
+                    <p>East Asian literature is the diverse writings from the East Asian nations, China, Japan, Korea, Mongolia and Taiwan. Literature from this area emerges as a <span class="highlight">distinct and unique field of prose and poetry</span> that embodies the cultural, social and political factors of each nation.</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>China</h3>
+                    <p>China is one of the world's cradles of civilization, has started its unbroken literary tradition in the 14th century BCE. Poets like Du Fu, Li Po and Wang Wei of the Tang Dynasty has produced world-renowned literary works.</p>
+                    
+                    <div class="author-card">
+                        <h4>DU FU</h4>
+                        <p>Also known as "Tu Fu"</p>
+                        <p>According to many literary critics, he was the "Greatest Chinese Poet of all time"</p>
+                        <p>He wrote the poem "The Ballad of the Army of Cats" which is about conscription with hidden satire that speaks of the noticeable luxury of the court.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>LI PO</h4>
+                        <p>Also known as "Li Bai"</p>
+                        <p>A Chinese poet who is a competitor of Du Fu as China's greatest poet.</p>
+                        <p>He was romantic in his personal life and his poetry, conventional tone and vivid imagery.</p>
+                        <p>He wrote the poem "Alone and drinking under the Moon" that deals with ancient social custom of drinking.</p>
+                        
+                        <div class="story-box">
+                            <h4>ALONE AND DRINKING UNDER THE MOON</h4>
+                            <p>Amongst the flowers<br>
+                            I am alone with my pot of wine<br>
+                            Drinking by myself;<br>
+                            Then lifting my cup I asked the moon<br>
+                            To drink with me, it's reflection<br>
+                            And mine in the wine cup, just<br>
+                            The three of us; then I sigh<br>
+                            For the moon cannot drink,<br>
+                            And my shadow goes emptily along<br>
+                            With me never saying a word;<br>
+                            With no other friends here,<br>
+                            I can but use these two for company;<br>
+                            In the time of happiness,<br>
+                            I too must be happy with a;;
+                            Around me;<br>
+                            I sit and sing<br>
+                            And it is as if the moon accompanies me;<br>
+                            Then if I dance, it is my shadow that<br>
+                            Dances along with me:<br>
+                            While still not drunk, I am glad<br>
+                            To make the moon and my shadow<br>
+                            Into friends, but then when<br>
+                            I have drunk too much, we all part;<br>
+                            Yet these are friends I can always count on<br>
+                            These who have no emotion whatsoever;<br>
+                            I hope that one day we three will meet again,<br>
+                            Deep in the Milky Way.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>WANG WEI</h4>
+                        <p>Wang Wei was a poet, painter, musician and statesman during the Tang Dynasty.</p>
+                        <p>He was the founder of the respected Southern school of painter-poets.</p>
+                        <p>Many of his best poems were inspired by local landscape.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>GUAN MO YE</h4>
+                        <p>Also known as "Mo Yan"</p>
+                        <p>Mo Yan is a Chinese novelist and short story writer. His first novel was "Red Sorghum."</p>
+                        <p>In 2012, Mo was awarded the Nobel Prize in Literature for his work as a writer "who with hallucinatory realism merges folk tales, history and the contemporary."</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>YU HUA</h4>
+                        <p>Yu Hua is a Chinese author, widely considered the foremost writer of avant-garde fiction and one of the greatest living authors in China.</p>
+                        <p>Shortly after his debut as a fiction writer in 1983, his first breakthrough came in 1987, when he released the short story "On the Road at Age Eighteen." His most famous work is "To Live."</p>
+                    </div>
+                    
+                    <div class="key-works">
+                        <h4>More Essential Texts for Reading</h4>
+                        <p><strong>Drama:</strong> "Thunderstorms" by Cao Yu</p>
+                        <p><strong>Novel:</strong> "Family" by Pa Jin, "Please Don't Call me Human" by Wang Shou</p>
+                        <p><strong>Short Story:</strong> "Strange Tales from a Chinese Studio" by Pu Songling</p>
+                        <p><strong>Poem:</strong> "On a gate tower at Yuzhou" by Zhang Chenzhi, "Battle" by Chu'u Yuan</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>Korea</h3>
+                    <p>Korea's literary tradition is greatly influenced by China's cultural dominance. As early as the 4th century CE, Korean poets wrote literary pieces in Classical Chinese poetry then transformations happened at the 7th century. <span class="highlight">Hangul</span>, Korean's distinct writing system and national alphabet, is developed in the 15th century that gave new beginnings of Korean's literature.</p>
+                    <p>In contemporary times, the Korean War has made a significant mark on Korean literature. In 1950, the themes present in the literary works are about <span class="highlight">alienation, conscience, disintegration, and self-identity</span>.</p>
+                    
+                    <div class="author-card">
+                        <h4>CHOE NAM SEON</h4>
+                        <p>He was considered prominent historian, pioneering poet and publisher in the Korean literature.</p>
+                        <p>He was also a leading member of the modern literary movement and became notable in pioneering modern Korean poetry.</p>
+                        <p>One of his works, the poem "The Ocean to the Youth" made him a widely acclaimed poet.</p>
+                        <p>The poem aimed to produce cultural reform. He sought to bring modern knowledge about the world to the youth of Korea.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>YI KWANG SU</h4>
+                        <p>He was also the one who launched the modern literary movement together with Ch'oe Nam-Seon.</p>
+                        <p>He was a novelist and wrote the first Korean novel "The Heartless" and became well-known because of it.</p>
+                        <p><strong>The Heartless:</strong> It was a description of the crossroads at which Korea found itself, stranded between tradition and modernity, and undergoing conflict between social realities and traditional ideals.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>YUN HUNGGIL</h4>
+                        <p>He was a South Korean novelist who won the 1977 Korean Literature Writers Award.</p>
+                        <p>He wrote the classic novel "Changma" (The Rainy Spell) that on a post-war family with two grandmothers and their shared grandson.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>PAK KYONGNI</h4>
+                        <p>She was a South Korean poet and novelist.</p>
+                        <p>She wrote the Korean's masterpiece and internationally acclaimed 21-volume epic novel Toji ("The Land"), wherein she chronicled the violent Korean history from 1897 to 1945.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>Japan</h3>
+                    <p>It has a world renowned poetic genre called <span class="highlight">"Haiku."</span></p>
+                    <p>Japan also has diverse forms of theatre:</p>
+                    <ul>
+                        <li><strong>Noh:</strong> traditional Japanese theatrical form</li>
+                        <li><strong>Kabuki:</strong> traditional Japanese drama with singing and dancing</li>
+                    </ul>
+                    
+                    <div class="author-card">
+                        <h4>ABE KUBO</h4>
+                        <p>Also known as "Abe Kimufasa"</p>
+                        <p>He was a Japanese novelist and playwright.</p>
+                        <p>He wrote the best-known play "Tomodachi" (Friends) which is a story, with dark humor, reveals the relationship with the other, and exposes the peculiarity of human relations in the present age.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>KIMITAKE HIRAOKA</h4>
+                        <p>Also known as "Mishima Yukio"</p>
+                        <p>He is the most important Japanese novelist of the 20th century.</p>
+                        <p>He was one of the finalists of the 1963 Nobel Prize for Literature and won numerous awards for his works.</p>
+                        <p>He wrote the novel "The Temple of the Golden Pavilion" and won Yomiuri Prize from Yomiuri Newspaper Corporation for the best novel.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>RYUNOSUKE AKUTAGAWA</h4>
+                        <p>He was a Japanese writer and regarded as the Father of the Japanese short story.</p>
+                        <p>He wrote the short story "Rashomon" that recounts the encounter between a servant and an old woman in the dilapidated Rashomon, the southern gate of the then-ruined city of Kyoto, where unclaimed corpses were sometimes dumped.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>HARUKI MURAKAMI</h4>
+                        <p>He was a Japanese novelist who won the international award Jerusalem Prize.</p>
+                        <p>He also won the Gunzou Literature Prize for his first novel "Hear the Wind Sing"</p>
+                        <p>It featured episodes in the life of an unnamed protagonist and his friend, the Rat, who hang out at a bar.</p>
+                        <p>The unnamed protagonist reminisces and muses about life and intimacy.</p>
+                        <p>Murakami's work has been translated into more than fifty languages.</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>HAIKU</h4>
+                        <p>A short, unrhymed Japanese poem that's made up of three lines and 17 syllables.</p>
+                        <h4>STRUCTURE</h4>
+                        <ul>
+                            <li>The first line has five syllables, the second line has seven, and the third line has five.</li>
+                            <li>Haiku poems often use a "cutting word" (kireji) to create a break in the meter.</li>
+                            <li>Haiku poems often include a seasonal reference (kigo).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="europe" class="section">
+            <div class="section-header">
+                <h2>European Literature</h2>
+            </div>
+            <div class="section-content">
+                <p>European literature includes some of the world's oldest literary traditions, from the epic poetry of ancient Greece, and Rome, to the modernist and post-modernist movements of the 20th century.</p>
+                
+                <div class="subsection">
+                    <h3>The Classical Period <span class="period-tag">800 B.C. – 500 A.D.</span></h3>
+                    <p>This period saw the birth of tragedy and comedy in Greek theater, with playwrights like Sophocles and Aristophanes, and the philosophical contributions of figures like Plato and Aristotle. Ancient Greek and Roman literature is characterized by its exploration of <span class="highlight">epic poetry, drama, and philosophy</span>.</p>
+                    
+                    <div class="author-card">
+                        <h4>HOMER</h4>
+                        <p><strong>The Iliad</strong> - An epic that focuses on the final weeks of the Trojan War, primarily highlighting the wrath of the Greek hero Achilles. The story ends with Hector's funeral rather than the fall of Troy.</p>
+                        <p><strong>The Odyssey</strong> - An epic that follows the Greek hero Odysseus on his long and challenging journey home after the Trojan War. It covers his adventures with mythical creatures, gods, and monsters as he struggles to return to Ithaca, where his wife and son await him.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>VIRGIL</h4>
+                        <p><strong>The Aeneid</strong> - A Latin epic poem that follows the journey of Aeneas, a Trojan hero after the fall of Troy. Aeneas is destined to found the city that will become Rome. The story begins with Aeneas fleeing Troy and undergoing various trials, including a love affair with the queen of Carthage, and encounters with mythical creatures, and different gods and goddesses.</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>THEMES</h4>
+                        <ol>
+                            <li>Heroism</li>
+                            <li>Fate</li>
+                            <li>Gods' influence on human affairs</li>
+                        </ol>
+                    </div>
+                    
+                    <p>The earliest surviving European works from this period are the Classical Greek epic poems the Iliad and the Odyssey, dating from the 8th century BCE and attributed to the poet Homer.</p>
+                    <p>The oldest known intact book in Europe is a copy of the Gospel of St. John. It dates from c. 698 and was found remarkably well-preserved in the coffin of St. Cuthbert.</p>
+                    <p>By the 3rd and 4th centuries CE, Christianity had become widespread throughout the Roman Empire, and religious morality began to make itself apparent in European texts.</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>Middle Age <span class="period-tag">5th century – late 15th century</span></h3>
+                    <p>The fall of the Roman Empire in 467 CE marked a turning point in the history of European literature. The Roman Catholic Church had spread throughout Europe, thanks of course to the reach of the Roman Empire, the Church remained the <span class="highlight">primary intellectual institution</span> of the medieval period.</p>
+                    <p>Many of the surviving texts from the Middle Ages are religious in nature, including hymns, theological writings and mystery plays, which usually depicted Biblical stories.</p>
+                    
+                    <div class="note-box">
+                        <h4>SECULAR LITERATURE</h4>
+                        <p>Not leaning much towards religion</p>
+                        <ul>
+                            <li>Welsh – "Y Gododdin"</li>
+                            <li>Old English = "Beowulf"</li>
+                        </ul>
+                    </div>
+                    
+                    <p>Although they produce this kind of literature, it was in smaller quantities. Many of these texts were based on myths or histories that had been recounted orally for centuries.</p>
+                    <p>They were finally written down during the Middle Ages. Oftentimes, these stories were altered by the Christian scholars who transcribed them. They added Christian influences that would not have been present in the original story's oral tradition. Thus, altering the historical record, that remains of these ancient pieces of literature.</p>
+                    
+                    <div class="author-card">
+                        <h4>Y Gododdin by Aneirin</h4>
+                        <p>This story commemorates the battle of the Catraeth around the sixth century. It tells the story of a band of warriors from the Kingdom of Gododdin.</p>
+                        <p>Gododdin is now the modern-day Scotland who fought bravely against overwhelming AngloSaxon forces. Despite their courage and skill, almost all of the warriors perish in the battle.</p>
+                        <p>The poem reflects themes of <span class="highlight">heroism, loyalty, and the tragic consequences of war</span>, celebrating the fallen warriors while mourning their loss.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>Beowulf</h4>
+                        <p>A old English epic poem that tells the story of its hero Beowulf, a warrior from Geatland.</p>
+                        <p>Geatland is now the modern day Sweden. Beowulf travels to Denmark to help King Hrothgar. whose mead-hall is being terrorized by the monster named Grendel.</p>
+                        <p>Beowulf defeats Grendel and later kills Grendel's mother who was seeking revenge. After returning home and becoming king, Beowulf faces his final challenge, defending his people from a dragon.</p>
+                        <p>Though Beowulf slays the dragon, he is mortally wounded and later on dies, leaving behind a legacy of <span class="highlight">bravery and heroism</span>.</p>
+                    </div>
+                    
+                    <p>There was also a limited amount of secular prose and poetry produced across Europe. Drama also regained popularity, particularly towards the end of the middle ages.</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>The Renaissance <span class="period-tag">14th century – 17th century</span></h3>
+                    <p>Saw an explosion of artistic and cultural activity emerging from years of plague, famine and political instability that marked the late Middle Ages.</p>
+                    <p>Beginning in Italy in the 14th century and slowly spreading across Europe, numerous discoveries in <span class="highlight">science, astrology and geography</span> brought sweeping changes to society.</p>
+                    <p>A growing interest in <span class="highlight">humanist philosophy</span> caused intellectuals to revisit the classical works of antiquity. The texts of the ancient Greeks and Romans, largely forgotten during the Middle Ages, began to inspire a new generation of European writers.</p>
+                    <p>Around 1440, the German goldsmith Johannes Guttenberg invented the <span class="highlight">printing press</span>, allowing literature to be reproduced and distributed on a previously unimaginable scale.</p>
+                    <p>Prior to Guttenberg's invention, texts had to be painstakingly copied by hand at a rate ranging from 40 pages, to just, to just a few pages per workday, depending, of course, on the technique that is being used.</p>
+                    <p>This tedious process understandably limited the availability of the literature. Guttenberg's press, however, was able to print up to 3,600 pages</p>
+                    <p>Europe was soon producing millions of printed books, meaning that more authors were able to have their work published. Literacy rates and democratization of information begun.</p>
+                    <p>Poetry flourished in France with the Pléiade Group.</p>
+                    <p>The Spanish Miguel de Cervantes wrote Don Quixote (1605), widely considered the <span class="highlight">first example of the modern novel</span>.</p>
+                    
+                    <div class="author-card">
+                        <h4>Don Quixote</h4>
+                                                <p>It follows the adventures of a man named Alonzo Quixano, who after reading too many chivalric romances. decides to become a knight-errant and adopts the name Don Quixote.</p>
+                        <p>Accompanied by his loyal squire, Sancho Panza, he sets out on a quest to revive chivalry, battling windmills he believes to be giants and confusing everyday situations for grand adventures.</p>
+                        <p>The novel is also a satirical exploration of idealism and reality, blending humor with deeper themes about dreams, madness, and the clash between fantasy.</p>
+                    </div>
+                    
+                    <div class="author-card">
+                        <h4>Rise of Shakespeare</h4>
+                        <p>Drama was also a significant literary form during the Renaissance, particularly in Elizabethan England, where William Shakespeare (1564-1616) was busy establishing himself as one of the greatest English language writers of all time with plays that are still widely read and performed today such as Romeo and Juliet (1597) and Hamlet (1599-1601)</p>
+                        <p>It is believed that Shakespeare wrote around <span class="highlight">38 plays</span>, including collaborations with other writers.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>The Enlightenment and Romanticism <span class="period-tag">17th – mid 19th century</span></h3>
+                    <p><strong>Enlightenment</strong> - During the Enlightenment, the volume of printed material significantly increased across Europe.</p>
+                    <p>Society placed greater importance on <span class="highlight">reason, individuality, and education</span>.</p>
+                    
+                    <div class="key-works">
+                        <h4>Some Works</h4>
+                        <p><strong>Thomas Hobbes:</strong> The Elements of Law, Natural and Politic (1640)</p>
+                        <p><strong>John Locke:</strong> An Essay Concerning Human Understanding (1689)</p>
+                        <p><strong>Jean Jacques Rousseau:</strong> The Social Contract (1762)</p>
+                        <p>These remain some of the most influential texts in the canon of Western philosophy.</p>
+                    </div>
+                    
+                    <p><strong>Romanticism</strong></p>
+                    <p>By the end of the 8th century, European writers began to reject the rationalism of the enlightenment in favor of <span class="highlight">sentimentality and imagination</span>.</p>
+                    <p>Starting in Germany in the late 1700s and emphasizing individual expression in art and individual rights in politics.</p>
+                    <p>Romanticism had become Europe's dominant literary and artistic movement by the beginning of the 19th century.</p>
+                    <p>Romanticism was a literary movement that emphasized individuality and strong emotions, idealized nature and explore universal teams such as love and loss.</p>
+                    
+                    <div class="key-works">
+                        <h4>Some Works/Writers</h4>
+                        <p><strong>Victor Hugo:</strong> Les Miserables (1862)</p>
+                        <p><strong>William Blake:</strong> Songs of Innocence and Experience (1794)</p>
+                        <p><strong>Johan Wolfgang Von Goethe</strong></p>
+                    </div>
+                    
+                    <p>They emphasized the power of emotions, the beauty of nature and importance of giving the imagination free reign. Their works are frequently studied to understand the cultural, moral, philosophical, theological and, social views of the early to mid 19th century. Texts like Les Miserables important for critiquing French politics after the French revolution.</p>
+                    
+                    <div class="author-card">
+                        <h4>Les Miserables</h4>
+                        <p>It follows the life of Jean Valjean, an ex-convict who is trying to redeem himself after serving 19 years in prison for stealing a loaf of bread.</p>
+                        <p>Valjean's, journey to redemption is marked by his struggle to escape their relentless pursuit of Inspector Javert who is determined to bring him to justice.</p>
+                        <p>The novel also explores themes of <span class="highlight">justice, mercy, love and revolution</span> set against the backdrop of social injustice and the French uprisings of the time.</p>
+                        <p>Through its rich cast of characters and interwoven stories, Les Miserables portrays the suffering of the poor and the power of compassion and redemption.</p>
+                    </div>
+                    
+                    <div class="trivia-box">
+                        <h4>TRIVIA</h4>
+                        <p>European Romanticism influenced a similar yet distinct literary movement in the United States. American Romanticism, commonly referred to as the first truly American literary movement, emphasized the newness and optimism of the western frontier and hope for the new country.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>Modernism <span class="period-tag">Late 19th - Early 20th century</span></h3>
+                    <p>Towards the end of the 19th century, realism gave way to modernism. A literary movement that continued the realist tradition of social critique, but focused on the <span class="highlight">form and style of writing</span> instead of plot and content.</p>
+                    <p>This resulted in a variety of new narrative techniques including <span class="highlight">stream of consciousness narration, non-linear storylines, and multiple viewpoints</span>.</p>
+                    <p>Modernism was a literary movement of the late 19th and earlier 20th centuries.</p>
+                    <p>Authors were inspired to break away from past literary conventions and play with their works form, style, and structure.</p>
+                    <p>Writers like James Joyce, Franz Kafka, and Virginia Woolf set a penchant for experimentation that would carry on into the 21st century</p>
+                    
+                    <div class="key-works">
+                        <h4>Works</h4>
+                        <p>Joseph Conrad's Heart of Darkness (1899)</p>
+                        <p>T.S. Eliot's The Wasteland (1922)</p>
+                        <p>James Joyce's Ulysses (1920)</p>
+                        <p>Katherine Mansfield's "The Green Party" (1922)</p>
+                        <p>Virginia Woolf's Mrs Dalloway (1925)</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>The Post Modernism Period <span class="period-tag">end of 1945</span></h3>
+                    <p>Beginning of the contemporary era</p>
+                    
+                    <div class="note-box">
+                        <h4>Literary Techniques</h4>
+                        <p><strong>Intertextuality</strong> is a literary convention where an author uses various techniques, including quotes, allusions, and more to refer to and connect their text to another.</p>
+                        <p><strong>Parody</strong> is an exaggerated imitation of a work or style for comedic effect and to mock or draw attention to specific elements of a text.</p>
+                        <p><strong>Metafiction</strong> is a literary technique where the author draws attention to the constructed nature of the text itself.</p>
+                    </div>
+                    
+                    <p>In European literature, many sub-movements among postmodern authors, such as the Theatre of the Absurd, was developed in reaction to the senselessness of World War II.</p>
+                    
+                    <div class="author-card">
+                        <h4>Theatre of the Absurd</h4>
+                        <p>Literary movement in the 1950s and 60s. Plays from this movement believed that life was essentially meaningless.</p>
+                        <p>The Irish playwright Samuel Beckett is often cited as one of the most important figures in the theater of the absurd movement.</p>
+                        <p>With his modern classic Waiting for Godot (1953) capturing the essential themes of <span class="highlight">existentialism and the meaningless of life</span>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="philippines" class="section">
+            <div class="section-header">
+                <h2>Philippine Literary History</h2>
+            </div>
+            <div class="section-content">
+                <h3>SIX LITERARY PERIODS</h3>
+                
+                <div class="subsection">
+                    <h3>THE PRE-COLONIAL PERIOD <span class="period-tag">B.C - 1564</span></h3>
+                    <ul>
+                        <li>Based on <span class="highlight">Oral Tradition</span></li>
+                        <li>Crude on ideology and phraseology</li>
+                        <li>Pass it through their mouths</li>
+                        <li>Storytellers: ELDERS</li>
+                        <li>No format is being followed; no right and wrong</li>
+                        <li>Writing System: <span class="highlight">BAYBAYIN</span></li>
+                    </ul>
+                    
+                    <div class="note-box">
+                        <h4>FORMS</h4>
+                        <p><strong>A. ORAL LITERATURE</strong></p>
+                        <ul>
+                            <li>Riddles (Bugtong)</li>
+                            <li>Proverbs (Kasabihan)</li>
+                        </ul>
+                        
+                        <p><strong>B. FOLK SONGS</strong></p>
+                        <ul>
+                            <li>Lullabies</li>
+                            <li>Drinking Songs</li>
+                            <li>Love Songs</li>
+                            <li>Songs of Death</li>
+                            <li>Religious Songs</li>
+                        </ul>
+                        
+                        <p><strong>C. FOLK TALES</strong></p>
+                        <ul>
+                            <li>Myths</li>
+                            <li>Legends</li>
+                            <li>Fables</li>
+                            <li>Epics</li>
+                        </ul>
+                        <p>* To teach life lessons</p>
+                    </div>
+                    
+                    <div class="key-works">
+                        <h4>EXAMPLE:</h4>
+                        <p>TAGALOG: "Daig ng maagap ang masipag"</p>
+                        <p>CEBUANO: "Dili mo pagpuhaton ngato sa uban ang alang kanimo dautan." (Golden Rule)</p>
+                        <p>Legend of Maria Makiling</p>
+                        <p>The Monkey and the Turtle</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>NOTES:</h4>
+                        <p>Latter - last word/name mentioned</p>
+                        <p>Former - first word/name mentioned</p>
+                    </div>
+                    
+                    <div class="story-box">
+                        <h4>ON THE ORIGIN OF EARTH AND MAN (BICOL MYTH)</h4>
+                        <p>Many, many years ago, there was no earth or man. There was only the sky. Now, in the sky there were two brothers, Bulan and Adlao. The latter was the older and the stronger. But the former was proud and hated his older brother.</p>
+                        <p>One day they had a quarrel. Bulan hurled bad words at Adlao, claimed superiority, and challenged Adlao to a fight. The older brother only laughed at his younger brother. But his laugh was answered by Bulan who bellowed: "You coward, come and fight and I will show you my superiority. If you don't fight, I will kill you."</p>
+                        <p>And Bulan suddenly rushed to Adlao without waiting for an answer. Adlao was angered and he was forced to fight his younger brother.</p>
+                        <p>And the fight commenced. It was a clash between two strengths. With his dub, Bulan hit Adlao, but Adlao dodged the hit quickly. Then Bulan used his bolo, but again he missed Adlao. It was Adlao's turn to hit. So, with his club he hit with all his might, first the eye of Bulan, then the arm of Bulan which became flat at the might of the stroke. Then with his bolo he cut Bulan's flattened arm. When Bulan's eye was hit and his arm was flattened and cut from his body, he cried with pain. His tears fell on the cut flattened arm.</p>
+                        <p>As Bulan foresaw his defeat with only one eye and one arm to fight with, he fled, and he was pursued by Adlao who was very angry and wanted to kill Bulan. And they kept running on and on, chasing each other.</p>
+                        <p>Now, the cut flattened arm of Bulan with his tears fell. Down and down it went until it finally settled. The flattened arm of Bulan became the earth, and the tears became the rivers and seas. Time came when two hairs sprang from Bulan's cut arm, and from these two hairs sprang man and woman. Thus, the earth and man came into being.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>THE SPANISH COLONIZATION PERIOD <span class="period-tag">1565 - 1863</span></h3>
+                    <p>It has two distinct classifications: <span class="highlight">RELIGIOUS & SECULAR</span></p>
+                    <p>It introduced Spanish as the medium of communication</p>
+                    
+                    <div class="note-box">
+                        <h4>TYPE OF LITERATURE</h4>
+                        <p><strong>RELIGIOUS LITERATURE</strong> - (e.g. Pasyon, Senakulo)</p>
+                        <p>Religious lyrics written by ladino poets or those versed in both Spanish and Tagalog were included in early catechism and were used to teach Filipinos the Spanish Language.</p>
+                        
+                        <p><strong>SECULAR LITERATURE</strong> - (e.g. Awit, Koridor, Prose, Narratives)</p>
+                        <p>Refers to stories that deal with topics other than religion and the concept of religion.</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>THE REVOLUTIONARY PERIOD <span class="period-tag">1864 - 1896</span></h3>
+                    <p>Planted seeds of <span class="highlight">nationalism</span> in Filipinos</p>
+                    <p>Language shifted from Spanish to Tagalog</p>
+                    
+                    <div class="key-works">
+                        <h4>EXAMPLE:</h4>
+                        <p><strong>PROPAGANDA LITERATURE</strong> (La Solidaridad)</p>
+                        <ul>
+                            <li>Political essays, Political novels</li>
+                            <li>Noli Me Tangere, El Filibusterismo</li>
+                        </ul>
+                        
+                        <p><strong>REVOLUTIONARY LITERATURE</strong></p>
+                        <ul>
+                            <li>Political essay and poetry</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>THE AMERICAN COLONIZATION PERIOD <span class="period-tag">1910 - 1945</span></h3>
+                    <p><strong>PERIOD OF APPRENTICESHIP (1910 - 1930)</strong></p>
+                    <p>Filipino writers imitated English and American models</p>
+                    
+                    <p><strong>PERIOD OF EMERGENCE (1920 - 1930)</strong></p>
+                    <p>Highly influenced by Western literacy trends like <span class="highlight">Romanticism and Realism</span>.</p>
+                    <p>(Well-known Filipino - English Writer: Jose Garcia Villa)</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>THE JAPANESE OCCUPATION PERIOD <span class="period-tag">1942 - 1960</span></h3>
+                    <p><strong>WAR YEARS (1942 - 1944)</strong></p>
+                    <p>Tagalog poets broke away from the Balagtas tradition and instead wrote in <span class="highlight">simple language and free verse</span>.</p>
+                    <p>Fiction prevailed over poetry</p>
+                    
+                    <p><strong>PERIOD OF MATURITY AND ORIGINALITY (1945 - 1960)</strong></p>
+                    <p>Bountiful harvest in poetry, fiction, drama and essay</p>
+                    <p>Filipino writers mastered english and familiarized themselves with diverse techniques.</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>THE CONTEMPORARY PERIOD <span class="period-tag">1960 - PRESENT</span></h3>
+                    <p>Martial Law regressed and curtailed human rights including <span class="highlight">freedom of press</span></p>
+                    <p>Writers used symbolisms and allegories to drive home their message, at the face of heavy censorship</p>
+                    <p>Theater was used as a vehicle for protest, such as the PETA (Philippine Educational Theater Association) and UP Theater</p>
+                    <p>From the eighties onwards, writers continue to show dynamism and innovation.</p>
+                </div>
+                
+                <div class="note-box">
+                    <h4>NOTES:</h4>
+                    <p><strong>ANIMISM:</strong> belief in innumerable spiritual beings concerned with human affairs and capable of helping or harming human interests</p>
+                    <p>*Beliefs during the pre-colonial period</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="artists" class="section">
+            <div class="section-header">
+                <h2>Canonical Philippine National Artists in Literature</h2>
+            </div>
+            <div class="section-content">
+                <p><strong>Canonical:</strong> Canon means rule, model or standard.</p>
+                <p><strong>National Artist:</strong> The highest honor given to Filipino artists who have made significant contributions to the country's arts and culture.</p>
+                
+                <div class="note-box">
+                    <h4>NOTES:</h4>
+                    <p><strong>CCP:</strong> Cultural Center of the Philippines</p>
+                    <p><strong>NCCA:</strong> National Commission for Culture and the Arts</p>
+                    <p><strong>President:</strong> announces and the gives the reward to the artists</p>
+                </div>
+                
+                <div class="author-card">
+                    <h4>AMADO V. HERNANDEZ (1973)</h4>
+                    <p>Labor leader</p>
+                    <p>Known for his criticism of social injustices</p>
+                    <p>Imprisoned for his involvement in the communist movement.</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>Luha ng Buwaya</li>
+                        <li>Mga Ibong Mandaragit</li>
+                        <li>Bullets & Roses: The Poetry of Amado V. Hernandez</li>
+                    </ul>
+                    
+                    <div class="key-works">
+                        <h4>SAMPLE</h4>
+                        <p><strong>MGA IBONG MANDARAGIT</strong></p>
+                        <p>A story of the valiant fight for justice and social change during and after the Japanese occupation of the Philippines in World War II</p>
+                        <p>This socio-political novel depicts the oppression of the Filipino people by both the brutal occupiers and their own corrupt leaders, while holding out hope for a vision of an egalitarian society.</p>
+                        <p>Inspired by Jose Rizal's novel, it is a sequel to El Filibusterismo</p>
+                        <p>Birds of Prey follows Mando Plaridel, the guerilla warrior who discovers his strength and greater purpose as he searches for and finds the treasure left behind by Rizal's protagonist Simoun.</p>
+                    </div>
+                </div>
+                
+                <div class="author-card">
+                    <h4>JOSE GARCIA VILLA (1973)</h4>
+                    <p>Poet, Literacy Critic, Short Story Writer, Painter</p>
+                    <p>He used the pen name "Doveglion" (Dove, Eagle, Lion)</p>
+                    <p>Known as the COMMA Poet</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>The Anchored Angel</li>
+                        <li>The Emperor's New Sonnet (Blank Book)</li>
+                        <li>Footnote to Youth</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>NICK JOAQUIN (1976)</h4>
+                    <p>The most distinguished Filipino Writer in English</p>
+                    <p>Known as Quijano de Manila</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>The Woman Who Had Two Navels</li>
+                        <li>Rizal in Saga</li>
+                        <li>Almanac for Manilenos</li>
+                        <li>Cave and Shadows (about Martial Law time)</li>
+                        <li>Summer Solstice</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>CARLOS P. ROMULO (1982)</h4>
+                    <p>Diplomat, soldier, journalist, author, statesman</p>
+                    <p>Pulitzer Price for Correspondence</p>
+                    
+                    <p><strong>WORK</strong></p>
+                    <ul class="work-list">
+                        <li>I Walk with Heroes</li>
+                        <li>I am a Filipino</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>N.V.M. GONZALES (1997)</h4>
+                    <p>Nestor Vicente M. Gonzales</p>
+                    <p>Novelist, short story writer, essayist and, poet</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>Children of the Ash Covered Loam</li>
+                        <li>The Tomato Game</li>
+                        <li>On the Ferry</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>EDITH L. TIEMPO (1999)</h4>
+                    <p>Mother of Philippine Literature</p>
+                    <p>Wrote Philippine Literature in English</p>
+                    <p>Established the Siliman National Writers Workshop</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>Bonsai</li>
+                        <li>Lament for the Littlest Fellow</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>F. SIONIL JOSE (2001)</h4>
+                    <p>One of the most widely read Filipino Writers in English</p>
+                    <p>Social Underpinnings of Class Struggle, Colonialism</p>
+                    
+                    <p><strong>WORK</strong></p>
+                    <ul class="work-list">
+                        <li>The Rosales Saga</li>
+                        <li>The God Stealer</li>
+                    </ul>
+                </div>
+                
+                <div class="author-card">
+                    <h4>CIRILO F. BAUTISTA (2015)</h4>
+                    <p>Poet, critic, and writer of nonfiction</p>
+                    <p>Encouragement of the young</p>
+                    
+                    <p><strong>WORKS</strong></p>
+                    <ul class="work-list">
+                        <li>The Ritual</li>
+                        <li>Summer Sums</li>
+                        <li>Words and Battlefields</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="context" class="section">
+            <div class="section-header">
+                <h2>Types of Context</h2>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>BIOGRAPHICAL CONTEXT</h3>
+                    <p>Refers to the author's life and the factors that influenced and shaped it, such as social, political, and economic conditions during his or her time.</p>
+                    <p>Also includes his or her educational background, religion, ethnicity among others</p>
+                    <p>Critic Paper: Biographical Criticism</p>
+                    <p>Remember: <span class="highlight">Biographical Analysis is not a biography</span></p>
+                    
+                    <div class="story-box">
+                        <h4>HOW MY BROTHER LEON BROUGHT HOME A WIFE (BY MANUEL E. ARGUILLA)</h4>
+                        <div class="character-list">
+                            <span class="character-tag">Baldo</span>
+                            <span class="character-tag">Leon</span>
+                            <span class="character-tag">Maria</span>
+                        </div>
+                        <p>Manila to Nagrebcan</p>
+                        <p>Labang - name of the kalabaw</p>
+                        <p>Took the Waig (road) instead of Camino Real</p>
+                        <p><strong>2 Tests:</strong></p>
+                        <ol>
+                            <li>To touch Labang</li>
+                            <li>To take the Waig route instead of Camino Real</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>MANUEL E. ARGUILLA</h4>
+                        <h4>FACTS ABOUT THE AUTHOR:</h4>
+                        <ul>
+                            <li>Arguilla was born on June 17, 1911 in Bauang, La Union to Crisanto Arguilla and Margarita Estabillo.</li>
+                            <li>He was the fourth child and his family owned a small piece of land in their town.</li>
+                            <li>He married Lydia Villanueva, who was from Ermita, Manila</li>
+                            <li>Youngest in the family</li>
+                            <li>The Ilocano culture of calling an older woman or man "Manang" or "Manong" respectively was also evident</li>
+                            <li>Additionally, this story was published during the American occupation in the country.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="key-works">
+                        <h4>EXAMPLE</h4>
+                        <p>Manuel Arguilla, the author of How My Brother Leon Brought Home a Wife, was born on June 17, 1911, in Bauang, La Union… Growing up in a rural environment, his family owned a small piece of land, a setting that profoundly influenced his writing</p>
+                    </div>
+                    
+                    <div class="note-box">
+                        <h4>FORMAT</h4>
+                        <p>Name of author - title - born when and where - child - parents - where he lives and what he has</p>
+                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h3>LINGUISTIC CONTEXT</h3>
+                    <p>The way language is used in a specific text to convey meaning, set tone, and develop characters and themes.</p>
+                    <p>Linguistic analysis is the systematic study of language using various analytical methods to understand its structure, use, and meaning. It involves breaking down and examining</p>
+                    <p>Diction, Syntax, Figurative Language, Mood and Tone, Overall Structure, Context</p>
+                    <p>"A heart beats for you." – Jose Rizal</p>
+                    <p>You have to analyze everything for you to understand the context on a deeper level.</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>SOCIO-CULTURAL CONTEXT</h3>
+                    <p>Helps you understand the social, economic, political, and cultural forces affecting the work you're reading</p>
+                    <p>Analyzing it means you examine the role of the audience (readers) in shaping literature</p>
+                    <p>Best read Jose Rizal's books/novels</p>
+                </div>
+                
+                <div class="subsection">
+                    <h3>LITERARY CONTEXT</h3>
+                    <p>Descriptions of events, people and background info in literary works that gives the reader a clear understanding of what is happening.</p>
+                    <p>Helps to understand what is happening in the narrative through the description of events, people and background information.</p>
+                    <p>An example of this context would be providing the reader with information about about when and where a character is born</p>
+                    <p>Various circumstances and influences surrounding a work of literature that can help illuminate its meaning, themes and significance</p>
+                    <p>Historical Context, Genre, Literary Movement, Critical Perception</p>
+                    <p>Children of the City by Amadis Ma. Guerrero</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="stories" class="section">
+            <div class="section-header">
+                <h2>Stories</h2>
+            </div>
+            <div class="section-content">
+                <div class="story-box">
+                    <h4>Children of the City by Amadis Ma. Guerrero</h4>
+                    <h4>Summary:</h4>
+                    <p>The story follows Victor, an eight-year-old boy whose father is a dock worker. His father gets involved in a labor strike against unfair wages and poor working conditions. The strike escalates into violence, and Victor's father is tragically killed. His mother, unable to cope with the loss, eventually abandons him, leaving him in the care of his uncle, Tio Pedring.</p>
+                    <p>Forced to drop out of school, Victor is pushed into the harsh world of child labor as a newsboy. He navigates the dangers of Manila's streets, facing bullying, exploitation, and the reality of survival. He befriends Nacio, a lively and experienced newsboy, who teaches him the tricks of the trade. However, tragedy strikes again when Nacio is killed in a street accident.</p>
+                    <p>As Victor continues his struggle, he gradually becomes hardened by the world around him. At first, he resists the rough behavior of other newsboys, refusing to curse, smoke, or engage in their reckless habits. However, after a violent altercation, he finally gives in—accepting a cigarette as a symbol of his complete transformation</p>
+                    <p>The story depicts the loss of innocence, showing how Victor, once a hopeful child, is shaped by the harsh realities of the city. It critiques social injustices, child labor, and the cycle of poverty that forces children into lives of hardship and crime.</p>
+                </div>
+                
+                <div class="story-box">
+                    <h4>Footnote to Youth by Jose Garcia Villa</h4>
+                    <p>The story follows Dodong, a 17-year-old boy who believes he is ready for adulthood. He decides to marry Teang despite his father's hesitation. Dodong is confident in his choice, feeling that marriage will bring happiness and fulfillment.</p>
+                                        <p>However, soon after marriage, reality sets in. Teang becomes pregnant, and Dodong realizes the burden of responsibility that comes with having a family. As the years pass, more children arrive, leaving Teang exhausted and regretful. She wonders if her life would have been different had she married Lucio, an older suitor who remained childless.</p>
+                    <p>Dodong, too, begins to question his youthful decision. One night, he steps outside, seeking answers about why life does not fulfill youth's dreams. He realizes that youth is blinded by love and desire, but real life is far more difficult than expected.</p>
+                    <p>Years later, Dodong's son, Blas, comes home excited to tell him that he also wishes to marry young. Dodong, now older and wiser, does not want his son to go through the same struggles. However, he feels powerless, knowing that youth will always choose love first and learn the hardships later—just as he did.</p>
+                    <p>The story reflects on the cycle of life and how every generation must learn from its own experiences, rather than from the warnings of others.</p>
+                </div>
+                
+                <div class="story-box">
+                    <h4>How My Brother Leon Brought Home a Wife by Manuel E. Arguilla</h4>
+                    <p>Baldo narrates the journey of his brother Leon (Noel) as he brings his city-bred wife, Maria, home to their rural hometown of Nagrebcan, La Union from Manila. Instead of taking the usual route through the Camino Real, Baldo follows their father's instructions and takes them through the Waig, a rough, dry riverbed, as a test of Maria's adaptability to provincial life.</p>
+                    <p>Riding on a cart pulled by Labang, their family's bull, Baldo observes Maria's grace and poise despite the unfamiliar, rugged path. She remains cheerful, admiring the countryside and showing deep affection for Leon, calling him "Noel." Her warm demeanor reassures Baldo that she truly loves his brother and is willing to embrace rural life.</p>
+                    <p>Upon arriving home, their father quietly evaluates Maria through Baldo's account of the journey. Though he does not explicitly state his approval, Maria's patience and respect suggest that she has passed the test. The story highlights love, acceptance, and the contrast between urban and rural life, with Labang symbolizing the steady, unchanging nature of the countryside. Maria's journey represents not just a physical transition but also her readiness to be part of Leon's world</p>
+                </div>
+                
+                <div class="story-box">
+                    <h4>The Taximan by Catherine Lim</h4>
+                    <p>The Taximan is a short story by Catherine Lim that provides insight into Singaporean society through the perspective of a chatty and opinionated taxi driver. The story is narrated by the taximan himself as he shares his views on modern youth, morality, and changing cultural values.</p>
+                    <p>The taximan recounts his experiences driving young customers, particularly teenage schoolgirls, around the city. He expresses frustration with the new generation, criticizing their lack of discipline, obsession with money, and preference for Westernized lifestyles. He frequently complains about how these girls lie to their parents, skip school, and visit hotels with older men for money.</p>
+                    <p>Despite his disapproval, the taximan admits that he profits from this situation. He earns extra income by driving these girls to their secret destinations, even though he considers their actions immoral. His hypocrisy is revealed when he condemns the behavior but continues to benefit financially from it.</p>
+                    <p>Towards the end of the story, his disapproval turns personal when he shares that his own daughter has been caught engaging in similar behavior. This deeply upsets him, exposing his double standards—while he condemns other girls, he is devastated when the same thing happens in his own family.</p>
+                    
+                    <div class="key-works">
+                        <h4>Key Points</h4>
+                        <ol>
+                            <li><strong>Generational Conflict:</strong> The taximan criticizes modern youth, seeing them as morally corrupt compared to his own generation.</li>
+                            <li><strong>Hypocrisy:</strong> Although he looks down on these young girls, he benefits from their behavior by driving them around for extra money.</li>
+                            <li><strong>Cultural and Moral Decline:</strong> He laments the loss of traditional values in Singaporean society, blaming Western influences.</li>
+                            <li><strong>Irony:</strong> His own daughter ends up engaging in the very behavior he despises, making his frustration deeply personal.</li>
+                            <li><strong>Satire and Social Commentary:</strong> The story highlights hypocrisy in moral judgment and critiques how people often condemn others while acting in self-interest.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <img src="https://i.pinimg.com/originals/b0/c3/27/b0c327b7a1ec999945d4a86a21087106.jpg" alt="Hirono-chan" class="footer-image">
+            <p class="footer-text">Hirono's Literature Reviewer | Special thanks to Patricia Almeda</p>
+            <p>Good luck on your exams! (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</p>
+        </div>
+    </footer>
+</body>
+</html>
